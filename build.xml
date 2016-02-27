@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<project name="phar" default="dist">
+    <property file="./build.properties"/>
+    <target name="clean">
+        <delete dir="${dir.output}"/>
+    </target>
+    <target name="build" depends="clean">
+        <mkdir dir="${dir.output}"/>
+        <copy todir="./build">
+            <fileset dir="." id="root_dir">
+                <include name="bootstrap.php"/>
+            </fileset>
+        </copy>
+        <copy todir="./build/vendor">
+            <fileset dir="vendor" id="vendor_dir">
+                <include name="**/**"/>
+                <exclude name="bin/**"/>
+                <exclude name="phing/**"/>
+                <exclude name="ph**/**"/>
+                <exclude name="sebastian/**"/>
+                <exclude name="myclabs/**"/>
+                <exclude name="doctrine/**"/>
+                <exclude name="symfony/**"/>
+                <exclude name=".git/**" />
+            </fileset>
+        </copy>
+    </target>
+    <target name="dist" depends="build">
+        <pharpackage
+                destfile="./${phar.name}"
+                basedir="${dir.output}"
+                compression="${phar.compression}"
+                stub="./phar-stub.php"
+                signature="${phar.signature}">
+            <fileset dir="${dir.output}">
+                <include name="**/**"/>
+            </fileset>
+        </pharpackage>
+        <chmod file="./${phar.name}" mode="775"/>
+    </target>
+</project>
