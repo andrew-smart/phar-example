@@ -1,0 +1,8 @@
+#!/usr/bin/env php
+<?php
+
+/** @var \App\App $application */
+$app = require __DIR__.'/../bootstrap.php';
+echo $app->run();
+
+__HALT_COMPILER();
