@@ -6,6 +6,11 @@
     </target>
     <target name="build" depends="clean">
         <mkdir dir="${dir.output}"/>
+        <copy todir="./build/src">
+            <fileset dir="src" id="src_dir">
+                <include name="**/**"/>
+            </fileset>
+        </copy>
         <copy todir="./build">
             <fileset dir="." id="root_dir">
                 <include name="bootstrap.php"/>
